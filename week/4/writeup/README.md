@@ -23,7 +23,7 @@ In the prompt for the IP address, I entered ```; cat home/flag.txt``` which retu
 Next, I began looking for the script that Fred uses to check the uptime. I didn't feel like looking through all off the directories, so I looked online and found the "find" command.
 
 I ran the following command which showed me four different scripts.
-```; && find . -name *.sh```
+```; find . -name *.sh```
 
 The scripts that were located were
 * ./opt/container_startup.sh
@@ -31,7 +31,7 @@ The scripts that were located were
 * ./lib/init/vars.sh
 * ./etc/init.d/hwclock.sh
 
-After looking through these scripts, it seemed as if ```./opt/container_startup.sh``` was the file that I was looking for.  When I first opened the file, I had a bit of trouble understanding what the script was doing, but after researching online I was able to get some understanding.  The script appends the input from the user to the end of a string with a ping command.  This string is stored in the variable ```cmd```.  This string is then executed by the eval command and the output is stored in the variable ```output``` which is then echoed to the user.
+After looking through these scripts, it seemed as if ```./opt/container_startup.sh``` was the file that I was looking for.  When I first opened the file, I had a bit of trouble understanding what the script was doing, but after researching online I was able to get some understanding.  The script appends the input from the user to the end of a string with a ping command.  This string is stored in the variable ```cmd```.  This string is then executed by the ```eval``` command and the output is stored in the variable ```output``` which is then echoed to the user.
 
 
 How Fred can protect his system from this vulnerability.

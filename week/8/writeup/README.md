@@ -36,7 +36,8 @@ This was found by finding the IP in the pcap and then doing a reverse DNS lookup
 
 3. The file states that it has 9 sections but actually has 11.
 
-4. ```
+4. 
+```
 ------- HEADER -------  
 MAGIC: 0xdeadbeef  
 VERSION: 1  
